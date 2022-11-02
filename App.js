@@ -1,11 +1,15 @@
 import { useState } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import Input from "./components/Input";
 
 export default function App() {
     const [field1, setField1] = useState("");
     const [field2, setField2] = useState("");
     const [field3, setField3] = useState("");
+
+    const handleNumericField = (value) => {
+        return value.replace(/[^0-9]/g, "");
+    };
 
     const handlePrintValue = (value) => {
         return value != "" ? value : "Sem informação";
@@ -14,11 +18,17 @@ export default function App() {
     return (
         <View style={styles.container}>
             <Text style={styles.h1}>Prova de Mobile</Text>
-            <Input label="Campo 1" callback={setField1} />
-            <Input label="Campo 2" callback={setField2} />
+            <Input label="Campo 1" callback={setField1} value={field1} />
+            <Input
+                label="Campo 2"
+                callback={(value) => setField2(handleNumericField(value))}
+                keyboardType="numeric"
+                value={field2}
+            />
             <Input
                 label="Campo 3"
-                callback={setField3}
+                callback={(value) => setField3(handleNumericField(value))}
+                value={field3}
                 keyboardType="numeric"
             />
 
